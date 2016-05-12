@@ -8,5 +8,4 @@
 * 13RD112 鈴木大雅
 * 13RD159 永濱裕太
 
-## ファイル構成
- index.html
+## [ページに移動](http://flabonet.github.io/FjmtNS/)
