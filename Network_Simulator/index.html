@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+
+  <head>
+    <title>擬似GNS3</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="img/icon.ico" type="image/x-icon">
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+    <script src="js/bordar.js" type="text/javascript"></script>
+
+    <!-- xdomainajaxのプラグイン -->
+    <script src="src/jquery.xdomainajax.js"></script>
+
+    <!-- jCanvasのプラグイン(使用してないので消してもよい) -->
+    <script src="src/jcanvas.min.js" type="text/javascript"></script>
+
+    <!-- ContextMenuのプラグイン -->
+    <link href="src/jquery.contextMenu.css" rel="stylesheet" type="text/css">
+    <script src="src/jquery.ui.position.js" type="text/javascript"></script>
+    <script src="src/jquery.contextMenu.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>　● 擬似GNS3</h1>
+    </header>
+    <nav>
+      <img src="img/dust.png" class="dust">
+      <div class="height_line"></div>
+      <img src="img/start_1.png" class="start">
+      <img src="img/stop_1.png" class="stop">
+      <div class="height_line"></div>
+      <img src="img/cui.png" class="cui">
+    </nav>
+
+    <div class="container">
+      <!--######## 機器の選択ボックス ########-->
+      <div class="left">
+        <img src="img/pc.png" alt="PC" class="machinery">
+        <div class="width_line"></div>
+        <img src="img/server.png" alt="Server" class="machinery">
+        <div class="width_line"></div>
+        <img src="img/switch.png" alt="Switch" class="machinery">
+        <div class="width_line"></div>
+        <img src="img/router.png" alt="Router" class="machinery">
+        <div class="width_line"></div>
+        <img src="img/LANcable.png" class="lan">
+      <!-- left --></div>
+      <!--######## メインボックス ########-->
+      <div id="main"></div>
+      <!--######## トポロジーボックス ########-->
+      <div class="right_info"><p>トポロジーの概要</p></div>
+      <div class="right">
+        <p></p>
+      <!-- right --></div>
+      <!--######## コンソールボックス ########-->
+      <div class="console_info"><p>コンソール</p></div>
+      <div id="console"><pre id="data"></pre></div>
+    </div>
+
+    <footer>
+      <p>13rd074 河野歩磨・13rd112 鈴木大雅・13RD159 永濱裕太</p>
+    </footer>
+  </body>
+</html>
