@@ -1,79 +1,139 @@
-﻿$(function(){
+/****************************************************
+ *                                                  *
+ *  ネットワークシミュレータのプログラム                    *
+ *  ＬＡＮをクリックしたときの動作について                 *
+ *                                                  *
+ *                                                  *
+ *                                                  *
+ *                                                  *
+ ****************************************************/
 
-	var points = []; //ドラッグ時のマウスの座標を集める
-	var $canvas; 		 //追加されたキャンバスを格納
-	var canvasWidth;
-	var canvasHeight;
+$(function(){
+	// class(.lan)のクリック
+  $(".lan").click(function(){
 
-	function getRectPoints(ptax, ptay, ptbx, ptby, width) {
+    // LANが押されているときの動作
+    if ( $(this).attr("src") == "img/LANcable.png"){
 
-		var rad = Math.atan2(ptby - ptay, ptbx - ptax);
-		var offX = (width / 2) * Math.sin(rad);
-		var offY = (width / 2) * Math.cos(rad);
+			// 画像を変更
+			$(this).attr("src", "img/LANcable_2.png");
 
-		var array = [];
+      // 画像のドラッグ防止
+    	$("#main img").mouseup(function(e){
+    		e.preventDefault();
+      });
+    	$("#main img").mousedown(function(e){
+    		e.preventDefault();
+      });
 
-		array.push({x:ptax + offX, y:ptay - offY});
-		array.push({x:ptbx + offX, y:ptby - offY});
-		array.push({x:ptbx - offX, y:ptby + offY});
-		array.push({x:ptax - offX, y:ptay + offY});
+			var points = [];    //ドラッグ時のマウスの座標を集める
+			var $canvas; 		    //追加されたキャンバスを格納
+			var canvasWidth;
+			var canvasHeight;
 
-		return array;
-	}
+			/************************** 線を描く動作 ****************************/
+			function getRectPoints(ptax, ptay, ptbx, ptby, width) {
 
-	function addCanvas(){
-		return $('<canvas width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>').appendTo('#main');
-	}
+				var rad = Math.atan2(ptby - ptay, ptbx - ptax);
+				var offX = (width / 2) * Math.sin(rad);
+				var offY = (width / 2) * Math.cos(rad);
 
-	/* マウスのボタンが押されたときに処理を実行する */
-	function mouseDown(e){
-		$canvas = addCanvas();
-		points = [{x:e.pageX - this.offsetLeft, y:e.pageY - this.offsetTop}];
-		$(this).on("mousemove", mouseMove);
-	}
+				var array = [];
 
-	/* マウスが移動したときに処理を実行する */
-	function mouseMove(e){
-		var ctx = $canvas.get(0).getContext('2d');
+				array.push({x:ptax + offX, y:ptay - offY});
+				array.push({x:ptbx + offX, y:ptby - offY});
+				array.push({x:ptbx - offX, y:ptby + offY});
+				array.push({x:ptax - offX, y:ptay + offY});
 
-		points.push({x:e.pageX - this.offsetLeft, y:e.pageY - this.offsetTop});
+				return array;
+			}
 
-		var array = getRectPoints(
-			points[0].x,
-			points[0].y,
-			points[points.length - 1].x,
-			points[points.length - 1].y,
-			1
-		);
+			function addCanvas(){
+				return $('<canvas width="' + canvasWidth + '" height="' + canvasHeight + '"></canvas>').prependTo('#main');
+			}
 
-		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+			// マウスのボタンが押されたときに処理を実行する
+			function mouseDown(e){
+				$canvas = addCanvas();
+				points = [{x:e.pageX - this.offsetLeft, y:e.pageY - this.offsetTop}];
+        // points = [{x:e.pageX - 101, y:e.pageY - 92}];
+				$(this).on("mousemove", mouseMove);
+			}
 
-		ctx.beginPath();
-		ctx.moveTo(array[0].x, array[0].y);
-		ctx.lineTo(array[1].x, array[1].y);
-		ctx.lineTo(array[2].x, array[2].y);
-		ctx.lineTo(array[3].x, array[3].y);
-		ctx.closePath();
-		ctx.fill();
+			// マウスが移動したときに処理を実行する
+			function mouseMove(e){
+				var ctx = $canvas.get(0).getContext('2d');
 
-	}
+				points.push({x:e.pageX - this.offsetLeft, y:e.pageY - this.offsetTop});
+        // points.push({x:e.pageX - 101, y:e.pageY - 92});
 
-	/* マウスのボタンが離されたときに処理を実行する */
-	function mouseUp(e){
+				var array = getRectPoints(
+					points[0].x,
+					points[0].y,
+					points[points.length - 1].x,
+					points[points.length - 1].y,
+					2
+				);
 
-		$(this).off("mousemove", mouseMove);
+				ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-		if(points.length == 1){
-			$canvas.remove();
-		}
+				ctx.beginPath();
+				ctx.moveTo(array[0].x, array[0].y);
+				ctx.lineTo(array[1].x, array[1].y);
+				ctx.lineTo(array[2].x, array[2].y);
+				ctx.lineTo(array[3].x, array[3].y);
+				ctx.closePath();
+				ctx.fill();
 
-		points = [];
-	}
+			}
 
-	$('#main').on("mousedown",mouseDown);
-	$('#main').on("mouseup mouseleave", mouseUp);
+			// マウスのボタンが離されたときに処理を実行する
+			function mouseUp(e){
 
-	canvasWidth = $('#main').width();
-	canvasHeight = $('#main').height();
+				$(this).off("mousemove", mouseMove);
 
+				if(points.length == 1){
+					$canvas.remove();
+				}
+
+				points = [];
+			}
+
+			$('#main').on("mousedown", mouseDown);
+			$('#main').on("mouseup mouseleave", mouseUp);
+
+			canvasWidth = $('#main').width();
+			canvasHeight = $('#main').height();
+
+			/**************************************************************/
+
+      // hoverを追加(lanBorder_on, lanBorder_off)
+      $("#main img").hover(lanBorder_on, lanBorder_off);
+      function lanBorder_on() {
+				// cssの設定を加える
+        $(this).css({
+          boxShadow: "0px 0px 10px #999",
+          userSelect: "none",
+        });
+				// 一時的にドラッグ機能を無効
+				$(this).draggable("disable");
+      }
+      function lanBorder_off() {
+				// cssの設定を削除する
+        $(this).css({
+          boxShadow: "",
+        });
+				// ドラッグ機能を有効
+				$(this).draggable("enable");
+      }
+    }
+
+    else {
+      $(this).attr("src", "img/LANcable.png");
+			$('#main').off("mousedown", mouseDown);
+			$('#main').off("mouseup mouseleave", mouseUp);
+			/* hoverを消す(lanBorder) */
+      $("#main img").off("mouseenter").off("mouseleave");
+    }
+  });
 });

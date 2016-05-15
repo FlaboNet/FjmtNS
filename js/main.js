@@ -1,7 +1,7 @@
 /****************************************************
  *                                                  *
  *  ネットワークシミュレータのプログラム                    *
- *                                                  *
+ *  今のところメインのコードを書いている                   *
  *                                                  *
  *                                                  *
  *                                                  *
@@ -9,16 +9,21 @@
  ****************************************************/
 
 $(function(){
-  /* 変数の定義 */
+  // 変数の定義
   var flg = true;
 
-  /* class(.dust)のクリック */
+  // class(.dust)のクリック
   $(".dust").click(function(){
     $("#main img").remove();
     $(".right p").replaceWith("<p></p>");
   });
 
-  /* class(.machinery)のドラッグ */
+  // class(.lan_delete)のクリック
+  $(".lan_delete").click(function(){
+    $("#main canvas").remove();
+  });
+
+  // class(.machinery)のドラッグ
   $(".machinery").draggable({
     helper: 'clone',
     revert: true,
@@ -30,7 +35,7 @@ $(function(){
     },
   });
 
-  /* class(.main)のドロップ */
+  // class(.main)のドロップ
   $("#main").droppable({
     accept: '.machinery',
     tolerance: 'fit',
@@ -46,8 +51,9 @@ $(function(){
     }
   });
 
-  /* class(.console)のPHP動作の確認 */
+  // class(.console)のPHP動作の確認
   $(document).on("click", ".start", function(){
+    $("#console").html("通信中…");
     $.ajax({
       type: "POST",
       url: "http://192.168.11.12/ns-allinone-3.25/ns-3.25/a.php",
@@ -61,52 +67,10 @@ $(function(){
     });
   });
 
-
-  /* class(.console)のPHP動作の確認 *//*
-  $(document).on("click", ".start", function(){
-    $.get(
-      "php/test.php",
-      function( data, textStatus ){
-        if(textStatus == "success") {
-          console.log("読み込み成功");
-        }
-        $("#console").html(data);
-      }
-      ,"html"
-    );
-  });
-  */
-
-  /* class(.lan)のクリック */
-  $(".lan").click(function(){
-    if ( $(this).attr("src") == "img/LANcable.png"){
-
-      $(this).attr("src", "img/LANcable_2.png");
-      /* hoverを追加(lanBorder_on, lanBorder_off) */
-      $("#main img").hover(lanBorder_on, lanBorder_off);
-      function lanBorder_on() {
-        $(this).css({
-          boxShadow: "0px 0px 10px #999",
-        });
-      }
-      function lanBorder_off() {
-        $(this).css({
-          boxShadow: "",
-        });
-      }
-
-    } else {
-      $(this).attr("src", "img/LANcable.png");
-      /* hoverを消す(lanBorder) */
-      $("#main img").off("mouseenter").off("mouseleave");
-    }
-  });
-
-  /* 関数 boxDropping */
+  // 関数 boxDropping
   function boxDropping(ui, obj) {
     var tag = '';
     var flg = true;
-    // console.log(ui.position.top)  // デバック用
     // mainに画像を追加 (clssとstyleの設定の追加)
     $("#main").append(
       $("<img>").attr("src", ui.draggable.attr("src"))
@@ -120,25 +84,26 @@ $(function(){
     $(".right p").append("　" + ui.draggable.attr("alt") + "<br>");
   }
 
-  /* contextMenuのプラグインの設定 */
+  // contextMenuのプラグインの設定
   $.contextMenu({
     selector: '.context-menu-one',
     callback: function(key, options) {
-      /* contextMenuのデバック用 */
-      /*
+
+      /* contextMenuのデバック用
       var m = "clicked: " + key;
       console.log(m) || alert(m);
       */
 
-      /* 設定を押した時の動作 */
+      // 設定を押した時の動作
       if (key == "config") {
         alert(key + "が押されました");
       }
-      /* 削除を押した時の動作 */
+      // 削除を押した時の動作
       else if (key == "delete"){
         $(this).remove();
         /* トポロジの削除コードの追加方法がまだ未定 */
       }
+
     },
     items: {
       "config": {name: "設定", icon: "edit"},
