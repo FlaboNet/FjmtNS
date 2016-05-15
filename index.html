@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="ja">
-
   <head>
     <title>擬似GNS3</title>
     <meta charset="utf-8">
@@ -10,13 +9,11 @@
     <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
     <script src="js/bordar.js" type="text/javascript"></script>
-
+    <!-- <script src="js/bordar_jCanvas.js" type="text/javascript"></script> -->
     <!-- xdomainajaxのプラグイン -->
     <script src="src/jquery.xdomainajax.js"></script>
-
-    <!-- jCanvasのプラグイン(使用してないので消してもよい) -->
+    <!-- jCanvasのプラグイン -->
     <script src="src/jcanvas.min.js" type="text/javascript"></script>
-
     <!-- ContextMenuのプラグイン -->
     <link href="src/jquery.contextMenu.css" rel="stylesheet" type="text/css">
     <script src="src/jquery.ui.position.js" type="text/javascript"></script>
@@ -27,13 +24,17 @@
     <header>
       <h1>　● 擬似GNS3</h1>
     </header>
+
+    <!--######## ナビゲーションボックス ########-->
     <nav>
       <img src="img/dust.png" class="dust">
       <div class="height_line"></div>
       <img src="img/start_1.png" class="start">
+      <img src="img/pause_1.png" class="stop">
       <img src="img/stop_1.png" class="stop">
       <div class="height_line"></div>
       <img src="img/cui.png" class="cui">
+      <img src="img/lanDelete.png" class="lan_delete">
     </nav>
 
     <div class="container">
@@ -59,7 +60,7 @@
       <!--######## コンソールボックス ########-->
       <div class="console_info"><p>コンソール</p></div>
       <div id="console"><pre id="data"></pre></div>
-    </div>
+    <!-- container --></div>
 
     <footer>
       <p>13rd074 河野歩磨・13rd112 鈴木大雅・13RD159 永濱裕太</p>
