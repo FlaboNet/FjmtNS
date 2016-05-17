@@ -27,7 +27,7 @@ $(function(){
       });
 
       var points = [];    //ドラッグ時のマウスの座標を集める
-      var $canvas; 		    //追加されたキャンバスを格納
+      var $canvas;        //追加されたキャンバスを格納
       var canvasWidth;
       var canvasHeight;
 
