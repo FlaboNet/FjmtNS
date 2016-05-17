@@ -31,7 +31,7 @@ $(function(){
       var canvasWidth;
       var canvasHeight;
 
-			/************************** 線を描く動作 ****************************/
+      /************************** 線を描く動作 ****************************/
       function getRectPoints(ptax, ptay, ptbx, ptby, width) {
 
         var rad = Math.atan2(ptby - ptay, ptbx - ptax);
