@@ -1,11 +1,11 @@
 /****************************************************
- *                                                  *
- *  ネットワークシミュレータのプログラム                    *
- *  今のところメインのコードを書いている                   *
- *                                                  *
- *                                                  *
- *                                                  *
- *                                                  *
+ *
+ *  ネットワークシミュレータのプログラム
+ *  今のところメインのコードを書いている
+ *
+ *
+ *
+ *
  ****************************************************/
 
 $(function(){
@@ -15,6 +15,7 @@ $(function(){
   // class(.dust)のクリック
   $(".dust").click(function(){
     $("#main img").remove();
+    $("#main canvas").remove();
     $(".right p").replaceWith("<p></p>");
   });
 
@@ -61,7 +62,6 @@ $(function(){
         $("#console").html(data);
       },
       error: function(){
-        console.log("no");
         $("#console").html("処理に失敗しました");
       }
     });
@@ -87,6 +87,19 @@ $(function(){
   // contextMenuのプラグインの設定
   $.contextMenu({
     selector: '.context-menu-one',
+
+    items: {
+      "config": {name: "設定", icon: "edit"},
+      "test1":   {name: "テスト1", icon: "cut"},
+      "まだ2":   {name: "○○", icon: "copy"},
+      "まだ3":   {name: "○○", icon: "paste"},
+      "delete": {name: "削除", icon: "delete"},
+      "sep1":   "---------",
+      "quit":   {name: "閉じる", icon: function(){
+                  return 'context-menu-icon context-menu-icon-quit';
+                }}
+    },
+
     callback: function(key, options) {
 
       /* contextMenuのデバック用
@@ -98,23 +111,17 @@ $(function(){
       if (key == "config") {
         alert(key + "が押されました");
       }
+
+      // テスト1を押した時の動作
+      else if (key == "test1") {
+        
+      }
+
       // 削除を押した時の動作
       else if (key == "delete"){
         $(this).remove();
-        /* トポロジの削除コードの追加方法がまだ未定 */
+        /* トポロジの削除コードはそれなりに機能が充実したら追加予定 */
       }
-
     },
-    items: {
-      "config": {name: "設定", icon: "edit"},
-      "まだ1":   {name: "○○", icon: "cut"},
-      "まだ2":   {name: "○○", icon: "copy"},
-      "まだ3":   {name: "○○", icon: "paste"},
-      "delete": {name: "削除", icon: "delete"},
-      "sep1":   "---------",
-      "quit":   {name: "閉じる", icon: function(){
-                  return 'context-menu-icon context-menu-icon-quit';
-                }}
-    }
   });
 });
