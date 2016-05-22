@@ -11,6 +11,7 @@
 $(function(){
   // 変数の定義
   var flg = true;
+  var test = 0;
 
   // class(.dust)のクリック
   $(".dust").click(function(){
@@ -114,7 +115,7 @@ $(function(){
 
       // テスト1を押した時の動作
       else if (key == "test1") {
-        
+
       }
 
       // 削除を押した時の動作
@@ -123,5 +124,11 @@ $(function(){
         /* トポロジの削除コードはそれなりに機能が充実したら追加予定 */
       }
     },
+  });
+  
+  /* 動作テスト */
+  $(".cui").click(function(){
+    test++;
+    $("#console").append("(・´з`・)っ"+ test +"<br>");
   });
 });
