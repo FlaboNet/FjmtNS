@@ -60,6 +60,7 @@ nav img {
   padding: 2px 2px;
   width: 1091px;
   height: 167px;
+  overflow: scroll;
 }
 .right_info, .console_info {
   float: left;
