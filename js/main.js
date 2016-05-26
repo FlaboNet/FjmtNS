@@ -1,28 +1,15 @@
-/****************************************************
- *
- *  ネットワークシミュレータのプログラム
- *  今のところメインのコードを書いている
- *
- *
- *
- *
- ****************************************************/
+/*
+ * ネットワークシミュレータのプログラム
+ * 今のところメインのコードを書いている
+ */
 
 $(function(){
   // 変数の定義
-  var flg = true;
-  var test = 0;
+  var dropFlg = true;
 
   // class(.dust)のクリック
   $(".dust").click(function(){
-    $("#main img").remove();
-    $("#main canvas").remove();
     $(".right p").replaceWith("<p></p>");
-  });
-
-  // class(.lan_delete)のクリック
-  $(".lan_delete").click(function(){
-    $("#main canvas").remove();
   });
 
   // class(.machinery)のドラッグ
@@ -43,12 +30,12 @@ $(function(){
     tolerance: 'fit',
     drop: function(e, ui) {
       boxDropping(ui, $(this));
-      flg = false;
+      dropFlg = false;
     },
     deactivate: function(e, ui) {
-      ui.draggable.draggable({ revert: flg });
-      if(flg == false) {
-        flg = true;
+      ui.draggable.draggable({ revert: dropFlg });
+      if(dropFlg == false) {
+        dropFlg = true;
       }
     }
   });
@@ -71,12 +58,12 @@ $(function(){
   // 関数 boxDropping
   function boxDropping(ui, obj) {
     var tag = '';
-    var flg = true;
+    var dropFlg = true;
     // mainに画像を追加 (clssとstyleの設定の追加)
     $("#main").append(
       $("<img>").attr("src", ui.draggable.attr("src"))
       .attr("class", "context-menu-one")
-      .attr("style" , "position: absolute; top: "+ ui.offset.top + "px; left: "+ ui.offset.left +"px")
+      .attr("style", "position: absolute; top: "+ ui.offset.top + "px; left: "+ ui.offset.left +"px")
     );
     $("#main img").draggable({
       containment: '#main',
@@ -120,15 +107,10 @@ $(function(){
 
       // 削除を押した時の動作
       else if (key == "delete"){
-        $(this).remove();
+        alert(key + "が押されました");
+        // $(this).remove();
         /* トポロジの削除コードはそれなりに機能が充実したら追加予定 */
       }
     },
-  });
-  
-  /* 動作テスト */
-  $(".cui").click(function(){
-    test++;
-    $("#console").append("(・´з`・)っ"+ test +"<br>");
   });
 });
