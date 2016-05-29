@@ -5,10 +5,19 @@
 
 $(function(){
   // 変数の定義
-  var dropFlg = true;
+  var pcNode = 0;     // PCの個数
+  var swNode = 0;     // Switchの個数
+  var svNode = 0;     // Serverの個数
+  var ruNode = 0;     // Routerの個数
+  var dropFlg = true; // フラグ
 
   // class(.dust)のクリック
   $(".dust").click(function(){
+    // 変数のリセット
+    pcNode = 0;
+    swNode = 0;
+    svNode = 0;
+    ruNode = 0;
     $(".right p").replaceWith("<p></p>");
   });
 
@@ -40,8 +49,15 @@ $(function(){
     }
   });
 
+  // class(.right)のクリック
+  $(".right").on("click", "img", function(){
+    // 画像を変更
+    if($(this).attr("src") == "img/plus.jpg"){ $(this).attr("src", "img/minus.jpg"); }
+    else if($(this).attr("src") == "img/minus.jpg"){ $(this).attr("src", "img/plus.jpg"); }
+  });
+
   // class(.console)のPHP動作の確認
-  $(document).on("click", ".start", function(){
+  $(".start").click(function(){
     $("#console").html("通信中…");
     $.ajax({
       type: "POST",
@@ -67,9 +83,10 @@ $(function(){
     );
     $("#main img").draggable({
       containment: '#main',
+      zIndex: 1,
     });
     // rightにトポロジを追加
-    $(".right p").append("　" + ui.draggable.attr("alt") + "<br>");
+    $(".right p").append("<img src= img/plus.jpg> " + ui.draggable.attr("alt") + "<br>");
   }
 
   // contextMenuのプラグインの設定
@@ -78,14 +95,14 @@ $(function(){
 
     items: {
       "config": {name: "設定", icon: "edit"},
-      "test1":   {name: "テスト1", icon: "cut"},
-      "まだ2":   {name: "○○", icon: "copy"},
-      "まだ3":   {name: "○○", icon: "paste"},
+      "test1": {name: "テスト1", icon: "cut"},
+      "まだ2": {name: "○○", icon: "copy"},
+      "まだ3": {name: "○○", icon: "paste"},
       "delete": {name: "削除", icon: "delete"},
-      "sep1":   "---------",
-      "quit":   {name: "閉じる", icon: function(){
-                  return 'context-menu-icon context-menu-icon-quit';
-                }}
+      "sep1": "---------",
+      "quit": {name: "閉じる", icon: function(){
+               return 'context-menu-icon context-menu-icon-quit';
+               }}
     },
 
     callback: function(key, options) {
