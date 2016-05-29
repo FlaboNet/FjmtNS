@@ -55,6 +55,9 @@ nav img {
     width: 220px;
     height: 482px;
 }
+.right p {
+  padding-left: 3px;
+}
 #console {
   margin-top: 2px;
   padding: 2px 2px;
