@@ -32,7 +32,7 @@ nav img {
   float: left;
 }
 
-.left, #main, .right, #console, nav {
+.left, #main, #right, #console, nav {
   float: left;
   border-width: 2px;
   border-style: inset;
@@ -49,14 +49,14 @@ nav img {
     width: 866px;
     height: 500px;
 }
-.right {
+#right {
     margin-top: 1px;
     margin-left: 5px;
     width: 220px;
     height: 482px;
 }
-.right p {
-  padding-left: 3px;
+#right dl {
+    margin: 0;
 }
 #console {
   margin-top: 2px;
