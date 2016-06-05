@@ -1,6 +1,11 @@
 /*
  * ネットワークシミュレータのプログラム
  * 今のところメインのコードを書いている
+ *
+ * do: トポロジーの概要を dl dt dd 要素に変更する。
+ *     IPアドレスとサブネットマスクの値の受け渡しを出来るようにする。
+ * bg:
+ *
  */
 
 $(function(){
@@ -18,7 +23,7 @@ $(function(){
     swNode = 0;
     svNode = 0;
     ruNode = 0;
-    $(".right p").replaceWith("<p></p>");
+    $("#right dl").replaceWith("<dl></dl>");
   });
 
   // class(.machinery)のドラッグ
@@ -50,7 +55,7 @@ $(function(){
   });
 
   // class(.right)のクリック
-  $(".right").on("click", "img", function(){
+  $("#right").on("click", "img", function(){
     // 画像を変更
     if($(this).attr("src") == "img/plus.jpg"){ $(this).attr("src", "img/minus.jpg"); }
     else if($(this).attr("src") == "img/minus.jpg"){ $(this).attr("src", "img/plus.jpg"); }
@@ -79,14 +84,14 @@ $(function(){
     $("#main").append(
       $("<img>").attr("src", ui.draggable.attr("src"))
       .attr("class", "context-menu-one")
-      .attr("style", "position: absolute; top: "+ ui.offset.top + "px; left: "+ ui.offset.left +"px")
+      .attr("style", "position: absolute; top: "+ ui.offset.top +"px; left: "+ ui.offset.left +"px")
     );
     $("#main img").draggable({
       containment: '#main',
       zIndex: 1,
     });
     // rightにトポロジを追加
-    $(".right p").append("<img src= img/plus.jpg> " + ui.draggable.attr("alt") + "<br>");
+    $("#right dl").append("<dt><img src= img/plus.jpg> "+ ui.draggable.attr("alt") +"</dt><dd></dd>");
   }
 
   // contextMenuのプラグインの設定
@@ -94,15 +99,31 @@ $(function(){
     selector: '.context-menu-one',
 
     items: {
-      "config": {name: "設定", icon: "edit"},
-      "test1": {name: "テスト1", icon: "cut"},
-      "まだ2": {name: "○○", icon: "copy"},
-      "まだ3": {name: "○○", icon: "paste"},
-      "delete": {name: "削除", icon: "delete"},
+      ip: {
+        name: "IPアドレス",
+        type: "text",
+        value: ""
+      },
       "sep1": "---------",
-      "quit": {name: "閉じる", icon: function(){
-               return 'context-menu-icon context-menu-icon-quit';
-               }}
+      sub: {
+        name: "サブネットマスク",
+        type: "text",
+        value: ""
+      },
+      "sep2": "---------",
+      "delete": {name: "削除"},
+      "sep2": "---------",
+      "quit": {name: "閉じる"}
+    },
+    events: {
+      show: function(opt) {
+        var $this = this;
+        $.contextMenu.setInputValues(opt, $this.data());
+      },
+      hide: function(opt) {
+        var $this = this;
+        $.contextMenu.getInputValues(opt, $this.data());
+      }
     },
 
     callback: function(key, options) {
@@ -112,18 +133,8 @@ $(function(){
       console.log(m) || alert(m);
       */
 
-      // 設定を押した時の動作
-      if (key == "config") {
-        alert(key + "が押されました");
-      }
-
-      // テスト1を押した時の動作
-      else if (key == "test1") {
-
-      }
-
       // 削除を押した時の動作
-      else if (key == "delete"){
+      if (key == "delete"){
         alert(key + "が押されました");
         // $(this).remove();
         /* トポロジの削除コードはそれなりに機能が充実したら追加予定 */
